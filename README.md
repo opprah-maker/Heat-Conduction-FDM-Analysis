@@ -56,3 +56,17 @@ Since the code uses $\Delta t = 0.001\text{ s}$, the simulation is highly stable
 * `heat_conduction_fdm.m`: MATLAB simulation script.
 * `heat_distribution_results.csv`: Saved CSV file containing the final temperature distribution grid.
 * `heat-map.jpg`: Plotted 2D temperature contour.
+
+---
+
+## 🛠️ How to Run
+1. **Prerequisites**: MATLAB (with Optimization or Image Processing Toolbox, optional) or GNU Octave (free, open-source).
+2. **Steps to Run**:
+   - Open MATLAB or GNU Octave.
+   - Navigate to the repository directory.
+   - Run the script in the command window:
+     ```matlab
+     heat_conduction_fdm
+     ```
+   - The script will compute the 2D temperature distribution, display the temperature contour plot, and write the final temperature grid to `heat_distribution_results.csv`.
+
