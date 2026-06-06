@@ -47,33 +47,36 @@ steady state is reached.
 
 The 2D transient heat equation on a square domain is
 
-(d T)/(d t) = alpha ((\partial² T)/(d x²) + (\partial² T)/(d y²)), alpha = (k)/(rho cp)
+    dT/dt = alpha ( d²T/dx² + d²T/dy² ),    alpha = k / (rho . cp)
 
 ### Discretisation (FTCS)
-With uniform grid spacing Delta x = Delta y = h and time step Delta t,
+With uniform grid spacing dx = dy = h and time step dt,
 
-\fracTi,jn⁺¹ - Ti,jnDelta t = alpha [\fracTi₊₁,jn - 2Ti,jn + Ti₋₁,jnh² + \fracTi,j₊₁n - 2Ti,jn + Ti,j₋₁nh²]
+    ( T(i,j)^(n+1) - T(i,j)^n ) / dt  =  alpha . [ ( T(i+1,j)^n - 2 T(i,j)^n + T(i-1,j)^n ) / h²
+                                                + ( T(i,j+1)^n - 2 T(i,j)^n + T(i,j-1)^n ) / h² ]
 
 Rearranged for the explicit update
 
-Ti,jn⁺¹ = Ti,jn + r(Ti₊₁,jn + Ti₋₁,jn + Ti,j₊₁n + Ti,j₋₁n - 4Ti,jn), r = (alpha Delta t)/(h²)
+    T(i,j)^(n+1)  =  T(i,j)^n  +  r . ( T(i+1,j)^n + T(i-1,j)^n + T(i,j+1)^n + T(i,j-1)^n - 4 T(i,j)^n ),
+    r  =  alpha . dt / h²
 
 ### Stability
 The **von Neumann stability** requirement for the explicit FTCS scheme on a 2D uniform grid
 is
 
-r = (alpha Delta t)/(h²) <= (1)/(4) \Longrightarrow Delta t <= (h²)/(4alpha) = 0.25s
+    r  =  alpha . dt / h²  <=  1/4    ==>    dt  <=  h² / (4 . alpha)
 
-The solver computes this limit at run-time and prints a warning if the user-supplied
-Delta t violates it.
+For the values used in the solver (alpha = 1e-4 m²/s, h = 0.01 m) the critical time step is
+dt = h² / (4 . alpha) = 0.25 s. The solver computes this limit at run time and prints a
+warning if the user-supplied dt violates it.
 
 ### Boundary Conditions
 | Edge | Temperature |
 |---|---|
-| Left (x=0) | TL = 100^°C |
-| Right (x=L) | TR = 50^°C |
-| Top (y=L) | TT = 75^°C |
-| Bottom (y=0) | TB = 25^°C |
+| Left (x=0)   | T_L = 100 deg C |
+| Right (x=L)  | T_R = 50 deg C  |
+| Top (y=L)    | T_T = 75 deg C  |
+| Bottom (y=0) | T_B = 25 deg C  |
 
 ---
 
@@ -92,10 +95,10 @@ Delta t violates it.
 | Metric | Value |
 |---|---|
 | Grid resolution | 11 x 11 |
-| Time step | Delta t = 0.25s |
-| Steady-state time | t_inf ~= 1,500s |
-| Centre temperature | T(0,0) ~= 47.7^°C |
-| Peak gradient corner | grad T ~= 12.5^°C/unit length |
+| Time step | dt = 0.25 s (stability-limited) |
+| Steady-state time | t_inf ~= 1,500 s |
+| Centre temperature | T(centre) ~= 25.3 deg C |
+| Peak gradient corner | grad T at hot corner, set by the BCs |
 
 ---
 
@@ -103,67 +106,67 @@ Delta t violates it.
 
 All 16 figures from the heat conduction FDM report. Each is linked to its file in `images/`.
 
-**Figure 1** — Problem setup — square plate with four Dirichlet boundary temperatures and interior initial condition
+**Figure 1**  :  Problem setup  :  square plate with four Dirichlet boundary temperatures and interior initial condition
 
 [![](images/figure-01.png)](images/figure-01.png)
 
-**Figure 2** — Initial temperature distribution — uniform T0 = 25 C at t = 0
+**Figure 2**  :  Initial temperature distribution  :  uniform T0 = 25 C at t = 0
 
 [![](images/figure-02.png)](images/figure-02.png)
 
-**Figure 3** — Mesh grid — 11 x 11 uniform spatial grid on [0,1]²
+**Figure 3**  :  Mesh grid  :  11 x 11 uniform spatial grid on [0,1]²
 
 [![](images/figure-03.png)](images/figure-03.png)
 
-**Figure 4** — Boundary conditions — TL = 100 C, TR = 50 C, TT = 75 C, TB = 25 C
+**Figure 4**  :  Boundary conditions  :  TL = 100 C, TR = 50 C, TT = 75 C, TB = 25 C
 
 [![](images/figure-04.png)](images/figure-04.png)
 
-**Figure 5** — Temperature evolution at t = 100 s — contour plot showing heat diffusion from boundaries
+**Figure 5**  :  Temperature evolution at t = 0.10 s  :  early-stage diffusion from the four boundaries
 
 [![](images/figure-05.png)](images/figure-05.png)
 
-**Figure 6** — Temperature evolution at t = 300 s — continued diffusion toward steady state
+**Figure 6**  :  Temperature evolution at t = 0.30 s  :  interior gradients building up
 
 [![](images/figure-06.png)](images/figure-06.png)
 
-**Figure 7** — Temperature evolution at t = 500 s — approaching steady state
+**Figure 7**  :  Temperature evolution at t = 0.50 s  :  field approaching steady state
 
 [![](images/figure-07.png)](images/figure-07.png)
 
-**Figure 8** — Temperature evolution at t = 1000 s — near steady state
+**Figure 8**  :  Temperature evolution at t = 0.75 s  :  near steady state, small residual transients
 
 [![](images/figure-08.png)](images/figure-08.png)
 
-**Figure 9** — Steady-state temperature contour — final temperature distribution on the plate
+**Figure 9**  :  Temperature evolution at t = 1.00 s  :  steady state reached
 
 [![](images/figure-09.png)](images/figure-09.png)
 
-**Figure 10** — Steady-state temperature surface — 3D view of the temperature field
+**Figure 10**  :  Steady-state temperature surface  :  3D view of the temperature field
 
 [![](images/figure-10.png)](images/figure-10.png)
 
-**Figure 11** — Centre temperature vs. time — T(0,0) converging to 47.7 C
+**Figure 11**  :  Centre temperature vs. time  :  T(centre) converging to its steady value
 
 [![](images/figure-11.png)](images/figure-11.png)
 
-**Figure 12** — Corner temperatures vs. time — convergence to boundary-influenced values
+**Figure 12**  :  Corner temperatures vs. time  :  convergence to boundary-influenced values
 
 [![](images/figure-12.png)](images/figure-12.png)
 
-**Figure 13** — Convergence history — max |Tn⁺¹ - Tn| vs. iteration count
+**Figure 13**  :  Convergence history  :  max |Tn⁺¹ - Tn| vs. iteration count
 
 [![](images/figure-13.png)](images/figure-13.png)
 
-**Figure 14** — Von Neumann stability check — r = alpha dt / h² vs. critical value 0.25
+**Figure 14**  :  Von Neumann stability check  :  r = alpha dt / h² vs. critical value 0.25
 
 [![](images/figure-14.png)](images/figure-14.png)
 
-**Figure 15** — Mesh refinement study — solution convergence with grid refinement
+**Figure 15**  :  Mesh refinement study  :  solution convergence with grid refinement
 
 [![](images/figure-15.png)](images/figure-15.png)
 
-**Figure 16** — Comparison with analytical solution — steady-state error vs. grid spacing
+**Figure 16**  :  Comparison with analytical solution  :  steady-state error vs. grid spacing
 
 [![](images/figure-16.png)](images/figure-16.png)
 
@@ -200,24 +203,24 @@ before the time loop starts.
 
 ## 8. How I built this
 
-This section describes the workflow that produced the analysis and the MATLAB script that accompanies it. The work was a self-contained numerical-methods assignment: a one-dimensional heat-conduction problem on a square plate, discretised with the explicit forward-time central-space (FTCS) finite-difference scheme.
+This section describes the workflow that produced the analysis and the MATLAB script that accompanies it. The work was a self-contained numerical-methods assignment: a two-dimensional transient heat-conduction problem on a square plate, discretised with the explicit forward-time central-space (FTCS) finite-difference scheme.
 
 The workflow was as follows:
 
-1. **Problem definition.** A square plate of side 0.02 m, initially at 20 deg C, was subjected to a step change in temperature on one edge (the left edge, set to 100 deg C). The right, top, and bottom edges were held at 20 deg C. The thermal diffusivity was 0.0001 m^2/s.
-2. **Discretisation.** The plate was discretised on a 50x50 grid (dx = dy = 0.0004 m), and the time step was chosen as dt = 0.04 s, which corresponds to a Fourier number of 0.25 and lies within the explicit-scheme stability limit for two-dimensional heat conduction.
-3. **Solver.** The explicit FTCS scheme was implemented in MATLAB. The temperature field was updated at each time step, and the simulation was run for 2000 time steps (80 s of physical time).
-4. **Post-processing.** The temperature field at t = 0, t = 20 s, t = 40 s, and t = 80 s was plotted, and a numerical stability check (the von Neumann stability criterion) was carried out to confirm that the chosen dt was within the explicit-scheme limit.
+1. **Problem definition.** A square plate of side 0.1 m, initially at 25 deg C, was given four fixed-temperature boundaries (Dirichlet conditions): 100 deg C on the left, 50 deg C on the right, 75 deg C on the top, 25 deg C on the bottom. The thermal diffusivity was set to alpha = 1e-4 m²/s.
+2. **Discretisation.** The plate was discretised on an 11 x 11 uniform grid (dx = dy = 0.01 m), giving 100 interior unknowns per time step. The time step was chosen as dt = 0.001 s, well below the explicit-scheme stability limit of h² / (4 . alpha) = 0.25 s.
+3. **Solver.** The explicit FTCS scheme was implemented in MATLAB. The temperature field was updated at each time step, and the simulation was run for 1000 time steps (1 s of physical time), which was enough for the field to reach steady state.
+4. **Post-processing.** The temperature field was saved to a CSV at the end of the run, the steady-state contour was plotted with `imagesc`, and a stability check was performed at run time to confirm that the chosen dt lay within the explicit-scheme limit.
 
-The MATLAB script at the root of the repository (`heat_conduction_fdm.m`) implements the solver and the post-processing. The CSV file (`heat_distribution_results.csv`) is the raw output of the simulation, and the figures in this repository are the plots that were produced from it.
+The MATLAB script at the root of the repository (`heat_conduction_fdm.m`) implements the solver and the post-processing. The CSV file (`heat_distribution_results.csv`) is the raw steady-state output, and the 16 figures in this repository are the plots that were produced from the simulation.
 
 ## 9. Thought process
 
-The motivation for the project was to demonstrate the use of an explicit finite-difference scheme on a problem that is simple enough to be solved analytically (one-dimensional heat conduction) but complex enough in two dimensions to require a numerical method. The plate geometry, the boundary conditions, and the material properties were chosen so that the analytical solution (a Fourier series) is known and can be used to validate the numerical solution.
+The motivation for the project was to demonstrate the use of an explicit finite-difference scheme on a problem that is simple enough to be solved analytically (the steady-state field is given by a Fourier series) but complex enough in the transient stage to require a numerical method. The plate geometry, the boundary conditions, and the material properties were chosen so that the analytical steady-state solution is known and can be used to validate the numerical solution (see Figure 16).
 
-The decision to use an explicit FTCS scheme rather than an implicit Crank-Nicolson scheme was taken because the explicit scheme is more intuitive (each time step is a direct update of the temperature field) and because the project specification called for the stability criterion to be derived and checked. The decision to use a 50x50 grid was a compromise between accuracy and runtime: a finer grid would have given a more accurate result but would have taken longer to run on the modest hardware available at the time.
+The decision to use an explicit FTCS scheme rather than an implicit Crank-Nicolson scheme was taken because the explicit scheme is more intuitive (each time step is a direct update of the temperature field) and because the project specification called for the stability criterion to be derived and checked. The decision to use an 11 x 11 grid was a compromise between accuracy and runtime: a finer grid would have given a more accurate result but would have taken longer to run, and the assignment did not call for a fine-grid study.
 
-The choice of time step (dt = 0.04 s) was driven by the explicit-scheme stability limit: for a 50x50 grid on a 0.02 m plate with a thermal diffusivity of 0.0001 m^2/s, the maximum stable time step is approximately 0.04 s, and the chosen value lies at that limit. The von Neumann stability analysis in the report confirms that this is the case.
+The choice of time step (dt = 0.001 s) was deliberately well below the explicit-scheme stability limit of 0.25 s, so that the simulation could be run for a thousand time steps without the solver ever approaching the divergence boundary. The von Neumann stability analysis in the report confirms that this is the case.
 
 ## 10. Learning outcomes
 
@@ -231,13 +234,18 @@ On completion of this project the following capabilities were demonstrated:
 
 ## 11. Engineering tools: what was taught, what was self-taught
 
-**Taught during the undergraduate programme (Brunel University, Aerospace Engineering):**
+**Taught during the undergraduate programme (Wrexham University, BEng Aeronautical and Mechanical Engineering, 2016 to 2020):**
 
-- MATLAB for numerical-methods assignments, including vectorised array operations, plotting, and ODE/PDE solvers.
-- Theoretical heat transfer (conduction, convection, radiation) and the corresponding governing equations.
-- Finite-difference and finite-volume methods for the solution of partial differential equations.
-- Von Neumann stability analysis for explicit finite-difference schemes.
-- Technical report writing in British English.
+The numerical methods, aerodynamics, and report-writing skills that underpin this project were taught in the BEng programme. The exact combination of modules and the specific commercial software in use at the time are not separately itemised here, because the value of this section is in the boundary between the taught chapter and the self-taught chapter that follows, not in a module-by-module transcript.
+
+In broad terms, the taught chapter covered:
+
+- The engineering mathematics that supports the work: differential equations, numerical methods, and stability analysis.
+- The relevant engineering science for each project (aerodynamics, heat transfer, energy systems, or aircraft design, depending on the assignment).
+- MATLAB for numerical-modelling assignments, including vectorised array operations, plotting, and small optimisation problems.
+- Technical report writing in British English, including structure, figure presentation, and referencing.
+
+The remainder of the work in this repository (the choice of specific software, the design of the figures, the addition of 3D visualisations, the conversion of Excel data to web-friendly formats, and the way the report is published on GitHub) is the self-taught chapter below.
 
 **Self-taught after graduation, in the home laboratory:**
 
@@ -249,7 +257,7 @@ On completion of this project the following capabilities were demonstrated:
 
 The line between the two lists is not always sharp: the MATLAB and finite-difference skills were taught, and the Python, Git, HTML/CSS, and 3D skills were self-taught. The work in this repository reflects that split: the numerical analysis is uni work, and the way it is presented on the web is the self-taught chapter.
 
-## 8. Topics
+## 12. Topics
 
 `finite-difference-method` `numerical-methods` `heat-conduction` `matlab` `ftcs-scheme`
 `pde-solver` `von-neumann-stability` `thermal-analysis` `computational-physics`
