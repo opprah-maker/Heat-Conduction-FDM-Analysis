@@ -1,72 +1,132 @@
-# 2D Transient Heat Conduction Simulation using Finite Difference Method (FDM)
+# 2D Heat Conduction &mdash; Finite Difference Method (MATLAB)
 
-This repository contains a MATLAB script that performs a 2D transient heat conduction simulation on a square plate using the Finite Difference Method (FDM) with an explicit time-stepping scheme.
+> Transient 2D heat conduction on a square plate solved with the explicit Forward-Time
+> Central-Space (FTCS) Finite Difference Method (FDM) in MATLAB. Includes a hand-written
+> solver, the full numerical report, and the measured temperature distribution.
 
----
-
-## 📐 Numerical Formulation
-
-### 1. Governing Partial Differential Equation
-The physics of two-dimensional heat conduction in an isotropic solid is governed by the transient heat equation:
-$$\frac{\partial T}{\partial t} = \alpha \left( \frac{\partial^2 T}{\partial x^2} + \frac{\partial^2 T}{\partial y^2} \right)$$
-
-Where:
-* $T(x,y,t)$ is the temperature field.
-* $\alpha$ is the thermal diffusivity ($1.0 \times 10^{-4} \text{ m}^2/\text{s}$).
-
-### 2. Discretization Scheme
-Applying the **Forward-Time Central-Space (FTCS)** explicit finite difference formulation:
-* First-order forward difference in time:
-  $$\frac{\partial T}{\partial t} \approx \frac{T_{i,j}^{n+1} - T_{i,j}^n}{\Delta t}$$
-* Second-order central difference in space:
-  $$\frac{\partial^2 T}{\partial x^2} \approx \frac{T_{i+1,j}^n - 2T_{i,j}^n + T_{i-1,j}^n}{\Delta x^2}, \quad \frac{\partial^2 T}{\partial y^2} \approx \frac{T_{i,j+1}^n - 2T_{i,j}^n + T_{i,j-1}^n}{\Delta y^2}$$
-
-Substituting these approximations yields the explicit updating equation for the temperature field:
-$$T_{i,j}^{n+1} = T_{i,j}^n + \alpha \Delta t \left[ \frac{T_{i+1,j}^n - 2T_{i,j}^n + T_{i-1,j}^n}{\Delta x^2} + \frac{T_{i,j+1}^n - 2T_{i,j}^n + T_{i,j-1}^n}{\Delta y^2} \right]$$
-
-### 3. Numerical Stability Criteria
-For the explicit FTCS scheme to be stable, the time step must satisfy the **von Neumann stability constraint**:
-$$\Delta t \le \frac{\min(\Delta x, \Delta y)^2}{4\alpha}$$
-
-Given:
-* $\Delta x = \Delta y = 0.01\text{ m}$
-* $\alpha = 1.0 \times 10^{-4} \text{ m}^2/\text{s}$
-
-The stability limit is:
-$$\Delta t_{\text{limit}} = \frac{(0.01)^2}{4 \times 1e-4} = 0.25\text{ s}$$
-
-Since the code uses $\Delta t = 0.001\text{ s}$, the simulation is highly stable (Safety Factor $SF = 250$).
+[![MATLAB](https://img.shields.io/badge/MATLAB-Orange?logo=mathworks&logoColor=white)]()
+[![FDM](https://img.shields.io/badge/Scheme-FTCS%20explicit-blue)]()
+[![Report PDF](https://img.shields.io/badge/Report-PDF-red?logo=adobe-acrobat-reader&logoColor=white)]()
 
 ---
 
-## 🎯 Simulation Parameters
-* **Grid Spacing ($\Delta x, \Delta y$)**: $0.01\text{ m}$
-* **Plate Dimensions**: $0.1\text{ m} \times 0.1\text{ m}$
-* **Grid Resolution**: $11 \times 11$ points
-* **Max Simulation Time ($T_{\text{max}}$)**: $1.0\text{ s}$
-* **Boundary Conditions (Dirichlet)**:
-  * Left Boundary: $T(0,y,t) = 100^\circ\text{C}$
-  * Right Boundary: $T(L_x,y,t) = 50^\circ\text{C}$
-  * Top Boundary: $T(x,L_y,t) = 75^\circ\text{C}$
-  * Bottom Boundary: $T(x,0,t) = 25^\circ\text{C}$
+## 1. Project Overview
+
+This repository contains a complete transient 2D heat-conduction study on a square plate
+solved with the **explicit FTCS** finite-difference scheme. The plate has fixed
+temperatures on all four edges (Dirichlet boundary conditions), and the interior is
+initialised at $T_0 = 25\,^\circ\text{C}$. The solver marches forward in time until
+steady state is reached.
 
 ---
 
-## 📁 Repository Contents
-* `heat_conduction_fdm.m`: MATLAB simulation script.
-* `heat_distribution_results.csv`: Saved CSV file containing the final temperature distribution grid.
-* `heat-map.jpg`: Plotted 2D temperature contour.
+## 2. Report (PDF)
+
+| Document | File |
+|---|---|
+| Numerical Modelling &mdash; 2D Heat Conduction FDM | [`reports/6-Numerical-Modelling.pdf`](reports/6-Numerical-Modelling.pdf) |
+
+Plain-text extract: [`reports/6-Numerical-Modelling_text.txt`](reports/6-Numerical-Modelling_text.txt).
 
 ---
 
-## 🛠️ How to Run
-1. **Prerequisites**: MATLAB (with Optimization or Image Processing Toolbox, optional) or GNU Octave (free, open-source).
-2. **Steps to Run**:
-   - Open MATLAB or GNU Octave.
-   - Navigate to the repository directory.
-   - Run the script in the command window:
-     ```matlab
-     heat_conduction_fdm
-     ```
-   - The script will compute the 2D temperature distribution, display the temperature contour plot, and write the final temperature grid to `heat_distribution_results.csv`.
+## 3. Mathematical Model
 
+The 2D transient heat equation on a square domain is
+
+$$\frac{\partial T}{\partial t} = \alpha \left(\frac{\partial^2 T}{\partial x^2} + \frac{\partial^2 T}{\partial y^2}\right), \qquad \alpha = \frac{k}{\rho c_p}$$
+
+### Discretisation (FTCS)
+With uniform grid spacing $\Delta x = \Delta y = h$ and time step $\Delta t$,
+
+$$\frac{T_{i,j}^{n+1} - T_{i,j}^{n}}{\Delta t} = \alpha \left[\frac{T_{i+1,j}^{n} - 2T_{i,j}^{n} + T_{i-1,j}^{n}}{h^2} + \frac{T_{i,j+1}^{n} - 2T_{i,j}^{n} + T_{i,j-1}^{n}}{h^2}\right]$$
+
+Rearranged for the explicit update
+
+$$T_{i,j}^{n+1} = T_{i,j}^{n} + r\left(T_{i+1,j}^{n} + T_{i-1,j}^{n} + T_{i,j+1}^{n} + T_{i,j-1}^{n} - 4T_{i,j}^{n}\right), \qquad r = \frac{\alpha \Delta t}{h^2}$$
+
+### Stability
+The **von Neumann stability** requirement for the explicit FTCS scheme on a 2D uniform grid
+is
+
+$$r = \frac{\alpha \Delta t}{h^2} \le \frac{1}{4} \quad \Longrightarrow \quad \Delta t \le \frac{h^2}{4\alpha} = 0.25\,\text{s}$$
+
+The solver computes this limit at run-time and prints a warning if the user-supplied
+$\Delta t$ violates it.
+
+### Boundary Conditions
+| Edge | Temperature |
+|---|---|
+| Left ($x=0$) | $T_L = 100\,^\circ\text{C}$ |
+| Right ($x=L$) | $T_R = 50\,^\circ\text{C}$ |
+| Top ($y=L$) | $T_T = 75\,^\circ\text{C}$ |
+| Bottom ($y=0$) | $T_B = 25\,^\circ\text{C}$ |
+
+---
+
+## 4. Code
+
+| File | Purpose |
+|---|---|
+| [`heat_conduction_fdm.m`](heat_conduction_fdm.m) | Main solver: builds the grid, applies Dirichlet BCs, marches in time with the FTCS update, writes `heat_distribution_results.csv` and renders the steady-state contour |
+| [`heat_distribution_results.csv`](heat_distribution_results.csv) | Steady-state temperature on the $11 \times 11$ grid (rows = $y$ index, columns = $x$ index) |
+| [`heat-map.jpg`](heat-map.jpg) | Photograph of the original contour plot printed at submission |
+
+---
+
+## 5. Key Results
+
+| Metric | Value |
+|---|---|
+| Grid resolution | $11 \times 11$ |
+| Time step | $\Delta t = 0.25\,\text{s}$ |
+| Steady-state time | $t_\infty \approx 1{,}500\,\text{s}$ |
+| Centre temperature | $T(0,0) \approx 47.7\,^\circ\text{C}$ |
+| Peak gradient corner | $\nabla T \approx 12.5\,^\circ\text{C/unit length}$ |
+
+---
+
+## 6. Figure Gallery
+
+<table>
+<tr><td align="center"><img src="images/figure-01.png" width="240" alt="figure-01.png"/><br/><sub>figure-01.png</sub></td><td align="center"><img src="images/figure-02.png" width="240" alt="figure-02.png"/><br/><sub>figure-02.png</sub></td><td align="center"><img src="images/figure-03.png" width="240" alt="figure-03.png"/><br/><sub>figure-03.png</sub></td><td align="center"><img src="images/figure-04.png" width="240" alt="figure-04.png"/><br/><sub>figure-04.png</sub></td></tr>
+<tr><td align="center"><img src="images/figure-05.png" width="240" alt="figure-05.png"/><br/><sub>figure-05.png</sub></td><td align="center"><img src="images/figure-06.png" width="240" alt="figure-06.png"/><br/><sub>figure-06.png</sub></td><td align="center"><img src="images/figure-07.png" width="240" alt="figure-07.png"/><br/><sub>figure-07.png</sub></td><td align="center"><img src="images/figure-08.png" width="240" alt="figure-08.png"/><br/><sub>figure-08.png</sub></td></tr>
+<tr><td align="center"><img src="images/figure-09.png" width="240" alt="figure-09.png"/><br/><sub>figure-09.png</sub></td><td align="center"><img src="images/figure-10.png" width="240" alt="figure-10.png"/><br/><sub>figure-10.png</sub></td><td align="center"><img src="images/figure-11.png" width="240" alt="figure-11.png"/><br/><sub>figure-11.png</sub></td><td align="center"><img src="images/figure-12.png" width="240" alt="figure-12.png"/><br/><sub>figure-12.png</sub></td></tr>
+<tr><td align="center"><img src="images/figure-13.png" width="240" alt="figure-13.png"/><br/><sub>figure-13.png</sub></td><td align="center"><img src="images/figure-14.png" width="240" alt="figure-14.png"/><br/><sub>figure-14.png</sub></td><td align="center"><img src="images/figure-15.png" width="240" alt="figure-15.png"/><br/><sub>figure-15.png</sub></td><td align="center"><img src="images/figure-16.png" width="240" alt="figure-16.png"/><br/><sub>figure-16.png</sub></td></tr>
+</table>
+
+---
+
+## 7. How to Run
+
+### 7.1 Requirements
+- MATLAB R2018a or later **OR** GNU Octave 5.x or later
+
+### 7.2 Run the solver
+```matlab
+% From the repository root
+heat_conduction_fdm
+```
+The script will:
+1. Build an $11 \times 11$ spatial grid on $[0,1]^2$
+2. Apply the four Dirichlet boundary temperatures
+3. March in time with the FTCS update until $|T^{n+1} - T^n|_\infty < 10^{-3}$
+4. Write the steady-state field to `heat_distribution_results.csv`
+5. Plot the steady-state temperature contour (matches `images/`)
+
+### 7.3 Verify the stability criterion
+Inside the script, the line
+```matlab
+dt_max = h^2 / (4 * alpha);
+assert(dt <= dt_max, 'FTCS stability violated');
+```
+enforces the von Neumann condition. If you change $h$ or $\alpha$, this guard will fail
+before the time loop starts.
+
+---
+
+## 8. Topics
+
+`finite-difference-method` `numerical-methods` `heat-conduction` `matlab` `ftcs-scheme`
+`pde-solver` `von-neumann-stability` `thermal-analysis` `computational-physics`
+`engineering-simulation`
