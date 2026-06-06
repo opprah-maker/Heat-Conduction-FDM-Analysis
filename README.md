@@ -101,24 +101,24 @@ $\Delta t$ violates it.
 
 All 16 figures from the heat conduction FDM report. Each is linked to its file in `images/`.
 
-| Fig. | File | Description |
+| Fig. | Preview | Description |
 |---|---|---|
-| 1 | [`figure-01.png`](images/figure-01.png) | Problem setup — square plate with four Dirichlet boundary temperatures and interior initial condition |
-| 2 | [`figure-02.png`](images/figure-02.png) | Initial temperature distribution — uniform T0 = 25 C at t = 0 |
-| 3 | [`figure-03.png`](images/figure-03.png) | Mesh grid — 11 x 11 uniform spatial grid on [0,1]^2 |
-| 4 | [`figure-04.png`](images/figure-04.png) | Boundary conditions — TL = 100 C, TR = 50 C, TT = 75 C, TB = 25 C |
-| 5 | [`figure-05.png`](images/figure-05.png) | Temperature evolution at t = 100 s — contour plot showing heat diffusion from boundaries |
-| 6 | [`figure-06.png`](images/figure-06.png) | Temperature evolution at t = 300 s — continued diffusion toward steady state |
-| 7 | [`figure-07.png`](images/figure-07.png) | Temperature evolution at t = 500 s — approaching steady state |
-| 8 | [`figure-08.png`](images/figure-08.png) | Temperature evolution at t = 1000 s — near steady state |
-| 9 | [`figure-09.png`](images/figure-09.png) | Steady-state temperature contour — final temperature distribution on the plate |
-| 10 | [`figure-10.png`](images/figure-10.png) | Steady-state temperature surface — 3D view of the temperature field |
-| 11 | [`figure-11.png`](images/figure-11.png) | Centre temperature vs. time — T(0,0) converging to 47.7 C |
-| 12 | [`figure-12.png`](images/figure-12.png) | Corner temperatures vs. time — convergence to boundary-influenced values |
-| 13 | [`figure-13.png`](images/figure-13.png) | Convergence history — max |T^{n+1} - T^n| vs. iteration count |
-| 14 | [`figure-14.png`](images/figure-14.png) | Von Neumann stability check — r = alpha dt / h^2 vs. critical value 0.25 |
-| 15 | [`figure-15.png`](images/figure-15.png) | Mesh refinement study — solution convergence with grid refinement |
-| 16 | [`figure-16.png`](images/figure-16.png) | Comparison with analytical solution — steady-state error vs. grid spacing |
+| 1 | ![](images/figure-01.png) | Problem setup — square plate with four Dirichlet boundary temperatures and interior initial condition |
+| 2 | ![](images/figure-02.png) | Initial temperature distribution — uniform T0 = 25 C at t = 0 |
+| 3 | ![](images/figure-03.png) | Mesh grid — 11 x 11 uniform spatial grid on [0,1]^2 |
+| 4 | ![](images/figure-04.png) | Boundary conditions — TL = 100 C, TR = 50 C, TT = 75 C, TB = 25 C |
+| 5 | ![](images/figure-05.png) | Temperature evolution at t = 100 s — contour plot showing heat diffusion from boundaries |
+| 6 | ![](images/figure-06.png) | Temperature evolution at t = 300 s — continued diffusion toward steady state |
+| 7 | ![](images/figure-07.png) | Temperature evolution at t = 500 s — approaching steady state |
+| 8 | ![](images/figure-08.png) | Temperature evolution at t = 1000 s — near steady state |
+| 9 | ![](images/figure-09.png) | Steady-state temperature contour — final temperature distribution on the plate |
+| 10 | ![](images/figure-10.png) | Steady-state temperature surface — 3D view of the temperature field |
+| 11 | ![](images/figure-11.png) | Centre temperature vs. time — T(0,0) converging to 47.7 C |
+| 12 | ![](images/figure-12.png) | Corner temperatures vs. time — convergence to boundary-influenced values |
+| 13 | ![](images/figure-13.png) | Convergence history — max |T^{n+1} - T^n| vs. iteration count |
+| 14 | ![](images/figure-14.png) | Von Neumann stability check — r = alpha dt / h^2 vs. critical value 0.25 |
+| 15 | ![](images/figure-15.png) | Mesh refinement study — solution convergence with grid refinement |
+| 16 | ![](images/figure-16.png) | Comparison with analytical solution — steady-state error vs. grid spacing |
 
 ---
 
