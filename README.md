@@ -4,11 +4,11 @@
 > Central-Space (FTCS) Finite Difference Method (FDM) in MATLAB. Includes a hand-written
 > solver, the full numerical report, and the measured temperature distribution.
 
-[![MATLAB](https://img.shields.io/badge/MATLAB-Orange?logo=mathworks&logoColor=white)]()
+[![MATLAB](https://img.shields.io/badge/MATLAB-Orangelogo=mathworks&logoColor=white)]()
 [![FDM](https://img.shields.io/badge/Scheme-FTCS%20explicit-blue)]()
-[![Report PDF](https://img.shields.io/badge/Report-PDF-red?logo=adobe-acrobat-reader&logoColor=white)]()
+[![Report PDF](https://img.shields.io/badge/Report-PDF-redlogo=adobe-acrobat-reader&logoColor=white)]()
 
-[![Open in MATLAB Online](https://img.shields.io/badge/Open%20in-MATLAB%20Online-orange?style=flat-square&logo=mathworks&logoColor=white)](https://matlab.mathworks.com/open/github/v1?repo=opprah-maker/Heat-Conduction-FDM-Analysis&file=heat_conduction_fdm.m)
+[![Open in MATLAB Online](https://img.shields.io/badge/Open%20in-MATLAB%20Online-orangestyle=flat-square&logo=mathworks&logoColor=white)](https://matlab.mathworks.com/open/github/v1repo=opprah-maker/Heat-Conduction-FDM-Analysis&file=heat_conduction_fdm.m)
 
 ---
 
