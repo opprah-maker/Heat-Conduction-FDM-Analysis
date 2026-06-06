@@ -234,10 +234,12 @@ On completion of this project the following capabilities were demonstrated:
 
 ## 11. Engineering tools: what was taught, what was self-taught
 
-**Taught during the undergraduate programme (Wrexham University, BEng Aeronautical and Mechanical Engineering, 2016 to 2020):** this report maps to a single numerical-methods framework, with a small amount of background from the BEng.
+**The taught chapter (BEng Aeronautical and Mechanical Engineering, Wrexham University, 2016 to 2020):** this report maps to a single numerical-methods framework, with a small amount of background from the BEng.
 
-- **The numerical-methods (FTCS) framework.** The heat-conduction solver in this repo is the explicit forward-time central-space finite-difference scheme on an 11 by 11 grid (dx = dy = 0.01 m, alpha = 1e-4, dt = 0.001 s, 1000 steps). The von Neumann stability check, the boundary-condition application, and the analytical Fourier-series comparison all come from the numerical-methods portion of the BEng.
+- **The numerical-methods (FTCS) framework.** The heat-conduction solver in this repo is the explicit forward-time central-space finite-difference scheme on an 11 by 11 grid (dx = dy = 0.01 m, alpha = 1e-4, dt = 0.001 s, 1000 steps). The von Neumann stability check, the boundary-condition application, and the analytical Fourier-series comparison all come from the numerical-methods portion of the BEng. I remember the satisfaction of seeing the centre temperature decay curve match the analytical Fourier series almost exactly : that is when I really understood what numerical convergence means.
 - **Background from the BEng.** The heat-transfer theory, the underlying mathematics (PDEs, Fourier series), and the technical-report conventions were covered elsewhere in the BEng and provide the background for the report.
+
+
 
 
 
