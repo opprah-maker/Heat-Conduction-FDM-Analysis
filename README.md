@@ -1,5 +1,8 @@
 # 2D Heat Conduction : Finite Difference Method (MATLAB)
 
+<!-- Last refreshed: 2026-06-06 -->
+
+
 > Transient 2D heat conduction on a square plate solved with the explicit Forward-Time
 > Central-Space (FTCS) Finite Difference Method (FDM) in MATLAB. Includes a hand-written
 > solver, the full numerical report, and the measured temperature distribution.
