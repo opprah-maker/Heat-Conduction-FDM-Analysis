@@ -8,6 +8,8 @@
 [![FDM](https://img.shields.io/badge/Scheme-FTCS%20explicit-blue)]()
 [![Report PDF](https://img.shields.io/badge/Report-PDF-red?logo=adobe-acrobat-reader&logoColor=white)]()
 
+[![Open in MATLAB Online](https://www.mathworks.com/images/responsive/open-in-matlab-online.svg)](https://matlab.mathworks.com/open/github/v1?repo=opprah-maker/Heat-Conduction-FDM-Analysis&file=heat_conduction_fdm.m)
+
 ---
 
 ## Table of Contents
