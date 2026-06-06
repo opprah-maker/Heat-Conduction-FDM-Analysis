@@ -234,18 +234,12 @@ On completion of this project the following capabilities were demonstrated:
 
 ## 11. Engineering tools: what was taught, what was self-taught
 
-**Taught during the undergraduate programme (Wrexham University, BEng Aeronautical and Mechanical Engineering, 2016 to 2020):**
+**Taught during the undergraduate programme (Wrexham University, BEng Aeronautical and Mechanical Engineering, 2016 to 2020):** this report maps to a single numerical-methods framework, with a small amount of background from the BEng.
 
-The numerical methods, aerodynamics, and report-writing skills that underpin this project were taught in the BEng programme. The exact combination of modules and the specific commercial software in use at the time are not separately itemised here, because the value of this section is in the boundary between the taught chapter and the self-taught chapter that follows, not in a module-by-module transcript.
+- **The numerical-methods (FTCS) framework.** The heat-conduction solver in this repo is the explicit forward-time central-space finite-difference scheme on an 11 by 11 grid (dx = dy = 0.01 m, alpha = 1e-4, dt = 0.001 s, 1000 steps). The von Neumann stability check, the boundary-condition application, and the analytical Fourier-series comparison all come from the numerical-methods portion of the BEng.
+- **Background from the BEng.** The heat-transfer theory, the underlying mathematics (PDEs, Fourier series), and the technical-report conventions were covered elsewhere in the BEng and provide the background for the report.
 
-In broad terms, the taught chapter covered:
 
-- The engineering mathematics that supports the work: differential equations, numerical methods, and stability analysis.
-- The relevant engineering science for each project (aerodynamics, heat transfer, energy systems, or aircraft design, depending on the assignment).
-- MATLAB for numerical-modelling assignments, including vectorised array operations, plotting, and small optimisation problems.
-- Technical report writing in British English, including structure, figure presentation, and referencing.
-
-The remainder of the work in this repository (the choice of specific software, the design of the figures, the addition of 3D visualisations, the conversion of Excel data to web-friendly formats, and the way the report is published on GitHub) is the self-taught chapter below.
 
 **Self-taught after graduation, in the home laboratory:**
 
