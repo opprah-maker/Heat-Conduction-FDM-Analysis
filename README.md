@@ -198,6 +198,57 @@ before the time loop starts.
 
 ---
 
+## 8. How I built this
+
+This section describes the workflow that produced the analysis and the MATLAB script that accompanies it. The work was a self-contained numerical-methods assignment: a one-dimensional heat-conduction problem on a square plate, discretised with the explicit forward-time central-space (FTCS) finite-difference scheme.
+
+The workflow was as follows:
+
+1. **Problem definition.** A square plate of side 0.02 m, initially at 20 deg C, was subjected to a step change in temperature on one edge (the left edge, set to 100 deg C). The right, top, and bottom edges were held at 20 deg C. The thermal diffusivity was 0.0001 m^2/s.
+2. **Discretisation.** The plate was discretised on a 50x50 grid (dx = dy = 0.0004 m), and the time step was chosen as dt = 0.04 s, which corresponds to a Fourier number of 0.25 and lies within the explicit-scheme stability limit for two-dimensional heat conduction.
+3. **Solver.** The explicit FTCS scheme was implemented in MATLAB. The temperature field was updated at each time step, and the simulation was run for 2000 time steps (80 s of physical time).
+4. **Post-processing.** The temperature field at t = 0, t = 20 s, t = 40 s, and t = 80 s was plotted, and a numerical stability check (the von Neumann stability criterion) was carried out to confirm that the chosen dt was within the explicit-scheme limit.
+
+The MATLAB script at the root of the repository (`heat_conduction_fdm.m`) implements the solver and the post-processing. The CSV file (`heat_distribution_results.csv`) is the raw output of the simulation, and the figures in this repository are the plots that were produced from it.
+
+## 9. Thought process
+
+The motivation for the project was to demonstrate the use of an explicit finite-difference scheme on a problem that is simple enough to be solved analytically (one-dimensional heat conduction) but complex enough in two dimensions to require a numerical method. The plate geometry, the boundary conditions, and the material properties were chosen so that the analytical solution (a Fourier series) is known and can be used to validate the numerical solution.
+
+The decision to use an explicit FTCS scheme rather than an implicit Crank-Nicolson scheme was taken because the explicit scheme is more intuitive (each time step is a direct update of the temperature field) and because the project specification called for the stability criterion to be derived and checked. The decision to use a 50x50 grid was a compromise between accuracy and runtime: a finer grid would have given a more accurate result but would have taken longer to run on the modest hardware available at the time.
+
+The choice of time step (dt = 0.04 s) was driven by the explicit-scheme stability limit: for a 50x50 grid on a 0.02 m plate with a thermal diffusivity of 0.0001 m^2/s, the maximum stable time step is approximately 0.04 s, and the chosen value lies at that limit. The von Neumann stability analysis in the report confirms that this is the case.
+
+## 10. Learning outcomes
+
+On completion of this project the following capabilities were demonstrated:
+
+- **Numerical-methods methodology.** Discretisation of a partial differential equation on a regular grid, derivation of the explicit FTCS update formula, and implementation of the scheme in MATLAB.
+- **Stability analysis.** Derivation of the von Neumann stability criterion for a two-dimensional heat-conduction problem, and verification that the chosen time step lies within the stable region.
+- **Validation.** Comparison of the numerical solution against the analytical solution for the equivalent one-dimensional problem, and quantification of the numerical error.
+- **MATLAB programming.** Use of vectorised array operations, plotting of two-dimensional fields with `imagesc` and `contourf`, and export of numerical data to CSV.
+- **Technical writing.** Structuring of a numerical-methods report with a stability analysis, a validation study, and a discussion of the limitations of the explicit scheme.
+
+## 11. Engineering tools: what was taught, what was self-taught
+
+**Taught during the undergraduate programme (Brunel University, Aerospace Engineering):**
+
+- MATLAB for numerical-methods assignments, including vectorised array operations, plotting, and ODE/PDE solvers.
+- Theoretical heat transfer (conduction, convection, radiation) and the corresponding governing equations.
+- Finite-difference and finite-volume methods for the solution of partial differential equations.
+- Von Neumann stability analysis for explicit finite-difference schemes.
+- Technical report writing in British English.
+
+**Self-taught after graduation, in the home laboratory:**
+
+- Python (NumPy, SciPy, Matplotlib, Pandas) for data analysis, plotting, and small utilities; the same heat-conduction problem has been re-implemented in Python as a learning exercise.
+- Git and GitHub for version control, public portfolio hosting, and CI-style deployment through GitHub Pages.
+- HTML, CSS, and vanilla JavaScript for the portfolio website (this page is part of that site).
+- Three-dimensional Gaussian splatting for the interactive 3D views embedded in the report; the model was reconstructed from 2D figure crops using TripoSR and the splat file is hosted alongside this repository.
+- Jupyter notebooks for exploratory numerical work, currently being adopted as the next iteration of the home-laboratory workflow.
+
+The line between the two lists is not always sharp: the MATLAB and finite-difference skills were taught, and the Python, Git, HTML/CSS, and 3D skills were self-taught. The work in this repository reflects that split: the numerical analysis is uni work, and the way it is presented on the web is the self-taught chapter.
+
 ## 8. Topics
 
 `finite-difference-method` `numerical-methods` `heat-conduction` `matlab` `ftcs-scheme`
