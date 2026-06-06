@@ -256,3 +256,5 @@ The line between the two lists is not always sharp: the MATLAB and finite-differ
 `finite-difference-method` `numerical-methods` `heat-conduction` `matlab` `ftcs-scheme`
 `pde-solver` `von-neumann-stability` `thermal-analysis` `computational-physics`
 `engineering-simulation`
+
+<!-- cache-bust: 2026-06-06-1455 -->
