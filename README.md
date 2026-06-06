@@ -39,8 +39,6 @@ steady state is reached.
 |---|---|
 | Numerical Modelling : 2D Heat Conduction FDM | [`reports/6-Numerical-Modelling.pdf`](reports/6-Numerical-Modelling.pdf) |
 
-Plain-text extract: [`reports/6-Numerical-Modelling_text.txt`](reports/6-Numerical-Modelling_text.txt).
-
 ---
 
 ## 3. Mathematical Model
